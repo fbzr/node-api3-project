@@ -12,6 +12,7 @@ router.post('/:id/posts', (req, res) => {
 
 router.get('/', (req, res) => {
   // do your magic!
+  res.send('users route works');
 });
 
 router.get('/:id', (req, res) => {

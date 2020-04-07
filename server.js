@@ -2,22 +2,14 @@ const express = require('express');
 const logger = require('./middleware/logger');
 const validateUserId = require('./middleware/validateUserId');
 const validateUser = require('./middleware/validateUser');
+const validatePost = require('./middleware/validatePost');
 
 const server = express();
 
 server.use(express.json());
 server.use(logger);
 
-server.get('/', (req, res) => {
-  res.send(`<h2>Let's write some middleware!</h2>`);
-});
-
-server.post('/', validateUser, (req, res) => {
-  res.send(`<h2>Let's write some middleware!</h2>`);
-});
-
-server.get('/:id', validateUserId, (req, res) => {
-  res.json({ user: req.user });
-});
+server.use('/api/users', require('./users/userRouter'));
+server.use('/api/posts', require('./posts/postRouter'));
 
 module.exports = server;
