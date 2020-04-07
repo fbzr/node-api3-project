@@ -6,6 +6,6 @@ module.exports = async (req, res, next) => {
         req.user = user;
         next();
     } else {
-        res.status(400).json({ message: 'Missing user data' });
+        res.status(400).json({ message: 'Invalid user id' });
     }
 }
