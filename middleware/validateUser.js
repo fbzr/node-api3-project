@@ -1,10 +1,10 @@
 module.exports = (req, res, next) => {
     if(!req.body) {
-        res.status(400).json({ message: 'Missing user data' })
+        return res.status(400).json({ message: 'Missing user data' })
     } 
 
     if(!req.body.name) {
-        res.status(400).json({ message: 'missing required name field' });
+        return res.status(400).json({ message: 'missing required name field' });
     }
     next();
 }
