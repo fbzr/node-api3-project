@@ -56,13 +56,4 @@ router.put('/:id', validatePost, async (req, res, next) => {
   }
 });
 
-// custom middleware
-
-router.use((err, req, res, next) => {
-  res.status(500).json({ 
-    error: err,
-    message: 'There was an error handling posts database' 
-  });
-});
-
 module.exports = router;

@@ -79,11 +79,4 @@ router.put('/:id', validateUserId, validateUser, async (req, res, next) => {
   }
 });
 
-router.use((err, req, res, next) => {
-  res.status(500).json({ 
-    error: err,
-    message: 'There was an error handling users database'
-  });
-});
-
 module.exports = router;
