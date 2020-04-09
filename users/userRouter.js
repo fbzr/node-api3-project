@@ -7,6 +7,8 @@ const validatePost = require('../middleware/validatePost');
 
 const router = express.Router();
 
+router.use('/:id', validateUserId);
+
 router.post('/', validateUser, async (req, res, next) => {
   try {
     const newUser = await usersDb.insert(req.body);
@@ -16,7 +18,7 @@ router.post('/', validateUser, async (req, res, next) => {
   }
 });
 
-router.post('/:id/posts', validateUserId, validatePost, async (req, res, next) => {
+router.post('/:id/posts', validatePost, async (req, res, next) => {
   try {
     const newPost = await postsDb.insert({
       text: req.body.text,
@@ -37,7 +39,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', validateUserId, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     // req.user is assigned in validateUserId
     res.json(req.user);
@@ -46,7 +48,7 @@ router.get('/:id', validateUserId, async (req, res, next) => {
   }
 });
 
-router.get('/:id/posts', validateUserId, async (req, res, next) => {
+router.get('/:id/posts', async (req, res, next) => {
   try {
     const posts = await usersDb.getUserPosts(req.user.id);
     res.json(posts);
@@ -55,7 +57,7 @@ router.get('/:id/posts', validateUserId, async (req, res, next) => {
   }
 });
 
-router.delete('/:id', validateUserId, async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     await usersDb.remove(req.user.id);
     res.json({ message: 'User successfully removed' });
@@ -64,7 +66,7 @@ router.delete('/:id', validateUserId, async (req, res, next) => {
   }
 });
 
-router.put('/:id', validateUserId, validateUser, async (req, res, next) => {
+router.put('/:id', validateUser, async (req, res, next) => {
   try {
     const count = await usersDb.update(req.user.id, req.body);
     if (!count) {
