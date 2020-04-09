@@ -21,7 +21,7 @@ router.post('/', validateUser, async (req, res, next) => {
 router.post('/:id/posts', validatePost, async (req, res, next) => {
   try {
     const newPost = await postsDb.insert({
-      text: req.body.text,
+      ...req.body,
       user_id: req.user.id
     });
     res.status(201).json(newPost);
